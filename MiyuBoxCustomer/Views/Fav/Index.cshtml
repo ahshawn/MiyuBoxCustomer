@@ -1,0 +1,22 @@
+﻿@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Fruits and Vegetables";
+}
+@section scripts {
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/angular-route.js"></script>
+    <script src="~/Client/app/Product.js"></script>
+    <script src="~/Client/app/ProductListController.js"></script>
+    <script src="~/Client/app/productService.js"></script>
+    <script src="~/Client/app/reviewService.js"></script>
+    <script src="~/Client/app/paymentService.js"></script>
+    <script src="~/Client/app/orderService.js"></script>
+
+   
+}
+
+<div ng-app="ProductApp">
+    <ng-view></ng-view>
+</div>
+

@@ -1,0 +1,92 @@
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - MiyuBox</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("MiyuBox", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Fruits And Vegetables", "Index", "Fav")</li>
+                    <li>@Html.ActionLink("Proteins", "Index", "Proteins")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    @if (User.Identity.IsAuthenticated)
+    {
+        <script>var UniqueUserName = "@User.Identity.GetUserName()";</script>
+    }
+    else
+    {
+        <script>var UniqueUserName = "";</script>
+    }
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/584d188bde6cd808f32ceeab/default';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+<!--End of Tawk.to Script-->
+    <div id="scrolltotop">
+        <a href="#" class="back-to-top"><span class="glyphicon glyphicon-arrow-up"></span>Back to top</a>
+    </div>
+    <script type="text/javascript">
+                $('body').prepend('');
+
+                $(window).scroll(function(){
+                    if($(window).scrollTop() > 100){
+                        $('a.back-to-top').fadeIn('slow');
+                    } else {
+                        $('a.back-to-top').fadeOut('slow');
+                    }
+                })
+                $('a.back-to-top')
+                    .click(function () {
+                        $('body')
+                            .animate({
+                                scrollTop: 0
+                            },
+                                1000);
+
+                        return false;
+                    });
+    </script>
+</body>
+</html>

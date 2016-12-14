@@ -1,0 +1,169 @@
+﻿<div ng-controller="ProductListController">
+    <div class="parent" style="text-align: center;">
+        <div class="loading" style="display:none" id="ajaxBusy"><img src="/Content/ajaxload.gif" style="position:fixed; top:50%; left:50%;" /></div>
+    </div>
+
+    <div class="container">
+        <div class="row firstRow">
+            <div class="row">
+                <div class="col-md-9">
+                    <p>
+                        Search: <input type="text" ng-model="searchProducts"/><br/>
+                    </p>
+
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" ng-class="{active: isSelected(1)}"><a ng-click="select(1)" aria-controls="all" role="tab">All Types</a></li>
+                        <li role="presentation" ng-class="{active: isSelected(2)}"><a ng-click="select(2)" aria-controls="fruits" role="tab">Fruits</a></li>
+                        <li role="presentation" ng-class="{active: isSelected(3)}"><a ng-click="select(3)" aria-controls="vegetables" role="tab">Vegetables</a></li>
+                        <li role="presentation" ng-class="{active: isSelected(4)}"><a ng-click="select(4)" aria-controls="mushrooms" role="tab">Mushrooms</a></li>
+
+                    </ul>
+                    <div class="tab-content">
+                        <div>
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>Images</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Cost</th>
+                                    <th>Actions</th>
+                                </tr>
+                                <tr ng-repeat="product in products | filter: filtText | filter: searchProducts">
+                                    <td><img alt="Embedded Image" ng-src="data:image/png;base64,{{product.Image}}" class="img-thumbnail fade in active"/></td>
+                                    <td>{{product.Name}}</td>
+                                    <td>{{product.Description}}</td>
+                                    <td>{{product.Cost | currency}}</td>
+                                    <td>
+                                        <p ng-show="product.Quantity == 0"><span class="label label-danger">Out Of Stock</span></p>
+                                        <p>
+                                            <a ng-click="addToCart(product, cartQuantity);" class="btn btn-success" ng-disabled="product.Quantity === 0 || cartQuantity <= 0" role="button"><span class="glyphicon glyphicon-shopping-cart"></span>Add To Cart</a>
+                                            <button type="button" ng-click="getProductDetails(product)" class="btn btn-default" data-toggle="modal" data-target="#showReviews">Details</button>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-3 rightCart">
+                    <h4>Shopping Cart</h4>
+                    <hr/>
+                    <div>
+                        <h3>Total Amount:{{getCartPrice() | currency}}</h3>
+                        <span class="cart-item th radius" ng-repeat="product in cart">
+                            {{product.Name}} -
+                            <span class="badge" ng-show="product.Quantity > 0">
+                                x{{product.Quantity}}
+                            </span> - {{product.TotalCost | currency}}
+                            <br />
+                        </span>
+                        <a class="btn btn-success" ng-disabled="cart.length == 0" role="button" data-toggle="modal" data-target="#checkOut"><span class="glyphicon glyphicon-shopping-cart"></span>Checkout</a>
+                        <button ng-show="cart.length >= 1" ng-click="clearCart()" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>Clear Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ProductDetails -->
+    <div class="modal fade" id="showReviews" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-if="reviews">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header center" style="text-align: center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{{productDetails.Name}}</h4>
+                    <img alt="Embedded Image" ng-src="data:image/png;base64,{{productDetails.Image}}" class="img-thumbnail fade in active"/>
+                    <p>Description: {{productDetails.Description}}</p>
+                </div>
+                <div ng-show="getUserName()" style="text-align: center">
+                    <p>Add Your Comment:</p>
+                    <form>
+                        <div class="form-group">
+                            <label for="comment">Comment:</label>
+                            <textarea class="form-control" rows="5" id="comment" style="min-width: 100%" ng-model="addingReview"></textarea><br/>
+                            <button class="btn btn-default" ng-click="addReview(productDetails, addingReview)" data-dismiss="modal">Send</button>
+                        </div>
+                    </form>
+                </div>
+                <div ng-hide="getUserName()" class="alert alert-danger" style="text-align: center">
+                    <p>Login to add comment</p>
+                </div>
+                <div class="modal-body">
+                    <div ng-repeat="review in reviews">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Posted by: {{review.Username}} on {{review.Date | date}}</div>
+                            <div class="panel-body">
+                                {{review.Description}}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="checkOut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-if="cart">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header center" style="text-align: center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Your Current Cart</h4>
+                    <span class="cart-item th radius" ng-repeat="product in cart">
+                        {{product.Name}} -
+                        <span class="badge" ng-show="product.Quantity > 0">
+                            x{{product.Quantity}}
+                        </span> - {{product.TotalCost | currency}}
+                        <br /><br />
+                    </span>
+                    <div class="alert alert-info" ng-hide="checkStatus()">
+                        You are paying {{getCartPrice() | currency}}
+                    </div>
+                    <div class="alert alert-success" ng-show="checkStatus()">
+                        Result: {{status}} <br/>
+                        Approval code: {{ApprovalCode}}<br/>
+                        Transaction-Ref: {{TransactionReference}}<br/>
+                        Transaction-Date: {{TransactionDate}}<br/>
+                        Transaction-Amount: {{TransactionAmount}}<br/>
+                    </div>
+                </div>
+                <form ng-submit="checkOut()">
+                    <div class="modal-body">
+
+                        <div class="input-group">
+                            Card Number: <input type="text" class="form-control" aria-label="Card Number" ng-model="cardNumber">
+                        </div>
+                        <div class="input-group">
+                            Card Holder Name: <input type="text" class="form-control" aria-label="Card Holder" ng-model="cardHolder">
+                        </div>
+                        <div class="input-group">
+                            Expiry Date: <input type="text" class="form-control" aria-label="Card Expiry" ng-model="cardExpiry">
+                        </div>
+                        <div class="input-group">
+                            Card Type: <input type="text" class="form-control" aria-label="Card type" ng-model="cardType">
+                        </div>
+                        <div class="input-group">
+                            CVC: <input type="text" class="form-control" aria-label="Card CVC" ng-model="cardCVC">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Pay">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+

@@ -1,0 +1,43 @@
+﻿@Styles.Render("~/Content/style")
+@Scripts.Render("~/bundles/modernizr")
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<br />
+<!-- Intro Header -->
+<div class="intro">
+    <div class="intro-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h1 class="brand-heading">Miyu Box</h1>
+                    <br />
+                    <p class="intro-text">
+                        Your one stop shop protein and fresh vegetable online shop!
+                        <br>Click the button below to begin shopping!
+                    </p>
+                    @Html.ActionLink("Shop Now", "Index", "Fav", null, new { @class = "glyphicon glyphicon-shopping-cart" })
+                        <br />
+                    <br />
+                    <br />
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe width="420" height="315" src="https://www.youtube.com/embed/Y2DlolQNz-k?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<br />
+<!-- Footer -->
+<footer>
+    <div class="container text-center">
+        <p>Copyright &copy; MiyuBox 2016</p>
+    </div>
+</footer>
+
+

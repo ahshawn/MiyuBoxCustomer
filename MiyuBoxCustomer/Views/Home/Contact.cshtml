@@ -1,0 +1,100 @@
+﻿@section scripts {
+    @Scripts.Render("~/bundles/contact")
+<script>
+      function initMap() {
+          var uluru = { lat: 1.3920568, lng: 103.8928841 };
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 17,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTg3rAqpal2cZmmVJB4E2a3d8i_KT2d20&callback=initMap">
+</script>
+}
+
+<div class="container">
+    <div class="row">
+        <div id="map"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h1>Compass 1</h1>
+            1 Sengkang Square, Singapore 545078<br/>
+            P:69872202<br/>
+            <strong>Customer Support:</strong> MiyuBoxSupport@dmail.com<br/>
+            <strong>Marketing Support:</strong> MiyuBoxMarketing@dmail.com<br/>
+            <img src="~/Images/WALLPAPER 1.jpg" width="250px" height="200px"/>
+        </div>
+        <div class="col-md-8">
+            <h1 style="text-decoration: none;">Contact Us</h1>
+            <p>
+                We are here to answer any questions you may have about our MiyuBox experiences.
+                Reach out to us and we'll respond as soon as we can.
+                Even if there is something you want to purchase and can't find it on MiyuBox Store, let us know.
+                We will promise to do our best to help you out.
+            </p>
+
+            <button type="button" class="btn btn-success " data-toggle="modal" data-target="#addModal">Contact Us!</button>
+        </div>
+    </div>
+</div>
+
+<!-- TODO: Add New Form -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Contact Form</h4>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Please Fill up the contact form. We would like to head from you!</h2>
+                </div>
+
+                <div class="panel-body">
+                    <form class="form-horizontal" data-bind="submit: addProduct">
+                        <table class="table">
+                            <tr>
+                                <td>Name:</td>
+                                <td><textarea rows="1" cols="255" class="form-control" id="inputName" data-bind="value:newProduct.Name"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>Title of Form</td>
+                                <td><textarea rows="1" cols="255" class="form-control" id="inputTitle" data-bind="value:newProduct.Title"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>Contact Number:</td>
+                                <td><textarea rows="1" cols="255" class="form-control" id="inputcontactNumber" data-bind="value:newProduct.contactNumber"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>E-Mail:</td>
+                                <td><textarea rows="1" cols="255" class="form-control" id="inputEmail" data-bind="value:newProduct.Email"></textarea></td>
+                            </tr>
+
+                            <tr>
+                                <td>Feedback</td>
+                                <td><textarea rows="3" cols="255" class="form-control" id="inputText" data-bind="value:newProduct.text"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td align="center" colspan="2">
+                                    <button type="submit" class="btn btn-success">Submit Feedback</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxow-pJRWu-r1PmSxkO6tk16CYPndkNAU&callback=initMap"
+    async defer></script>*@

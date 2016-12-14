@@ -1,0 +1,329 @@
+﻿@section scripts {
+    @Scripts.Render("~/bundles/app")
+}
+@{
+    ViewBag.Title = "Protein";
+}
+<br />
+<br />
+<div class="jumbotron" style="background-color:#d12c56">
+
+    <div class="container text-center">
+        <h1>Miyuki Protein Store</h1>
+        <p>Delivering fresh proteins proteins everyday!</p>
+    </div>
+</div>
+
+<br />
+<br />
+
+
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <li data-target="#myCarousel" data-slide-to="3"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+
+            <img src="~/Protein/beef.jpg" alt="Beef" />
+            <div class="carousel-caption">
+                <h3>Beef</h3>
+                <p>Beef products available</p>
+            </div>
+        </div>
+       
+
+        <div class="item">
+            
+            <img src="~/Images/protein-foods.jpg" />" alt="MeatProduct">
+            <div class="carousel-caption">
+                <h3>MeatProduct</h3>
+                <p>Meat products available</p>
+            </div>
+        </div>
+
+        <div class="item">
+
+
+            <img src="~/Images/2italianbeef5.jpg" />alt="Italian">
+            <div class="carousel-caption">
+                <h3>ItalianBeef</h3>
+                <p>Meat products available</p>
+            </div>
+        </div>
+        
+        <div class="item">
+
+
+            <img src="~/Images/Beef.9db2c.jpg" /> alt="Cooked">
+            <div class="carousel-caption">
+                <h3>Cooked Meat</h3>
+                <p>Dishes you can do using Beef!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+<br />
+<br />
+
+
+
+
+<div class="container">
+    <div class="well well-sm">
+        <strong>Organise By</strong>
+        <div class="btn-group">
+            <a href="#" id="list" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-th-list">
+                </span>List
+            </a> <a href="#" id="grid" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-th"></span>Grid
+            </a>
+        </div>
+        <p>
+            <label>
+                <input type='checkbox' data-bind='checked: displayAdvancedOptions' />
+                Filter By:
+            </label>
+        </p>
+
+        <p data-bind='fadeVisible: displayAdvancedOptions'>
+            Show:
+            <label><input type='radio' name="Type" value='all' data-bind='checked: typeToShow' />All</label>
+            <label><input type='radio' name="Type" value='Beef' data-bind='checked: typeToShow' />Beef</label>
+            <label><input type='radio' name="Type" value='Chicken' data-bind='checked: typeToShow' />Chicken</label>
+            <label><input type='radio' name="Type" value='Milk' data-bind='checked: typeToShow' />Milk</label>
+        </p>
+
+        @*<input placeholder="Search…" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">*@
+        <a data-toggle="modal" data-target=".CartModal" class="btn btn-primary btn-xs">View Cart</a>
+    </div>
+
+    <br />
+    <br />
+
+
+
+    <div id="products" class="row list-group" data-bind="foreach: productsToShow">
+        <div class="item  col-xs-4 col-lg-4">
+            <div class="thumbnail">
+                <div class="col-sm-12 pattern">
+                    <table id="searchText" table style="height:250px">
+                        <tr>
+                            <td>
+                                <a href="#" class="thumbnail">
+                                    <img width="190" height="250" data-bind="attr: { src: 'data:image/jpeg;base64,'+ CoverImage }" class="img-responsive" />
+                                </a>
+                            </td>
+                            <td valign="top">
+                                <strong><span data-bind="text: Name"></span></strong>  <br />
+                                <span data-bind="text: Supplier"></span><br />
+                                Price: $<span data-bind="text: SellingPrice"></span> <br />
+
+                                <a data-bind="click:$parent.addToCart" class="btn btn-primary-xs">Add To Cart</a>
+
+
+                                <a data-bind="click:$parent.getProductDetails" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">Details</a>
+                                @*<a data-bind="click:$parent.getCartDetails" class="btn btn-primary btn-xs" data-toggle="modal" data-target="ViewCart">View Cart</a>*@
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+</div>
+
+@*<div data-bind="foreach: addToCart">
+
+    </div>*@
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-bind="if: details()">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Product Details</h4>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            <img width="190" height="250" data-bind="attr: {src: 'data:image/jpeg;base64,'+ details().CoverImage }" />
+                            <br />
+                            <br />
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>Product Name</td>
+                        <td>
+                            <input type="text" id="Name" class="form-control" readonly data-bind="value: details().Name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Product Type</td>
+                        <td>
+                            <textarea rows="1" id="Type" class="form-control" readonly data-bind="value: details().Type"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Product Description</td>
+                        <td>
+                            <textarea rows="3" cols="255" id="Description" class="form-control" readonly data-bind="value: details().Description"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Suplier Name</td>
+                        <td>
+                            <textarea rows="1" cols="255" id="Supplier" class="form-control" readonly data-bind="value: details().Supplier"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Selling Price</td>
+                        <td>
+                            <input type="number" id="SellingPrice" class="form-control" readonly data-bind="value: details().SellingPrice">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Quantity In Stock</td>
+                        <td>
+                            <input type="number" id="QuantityInStock" class="form-control" readonly data-bind="value: details().QuantityInStock">
+                        </td>
+                    </tr>
+
+
+
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                @*<button type="button" data-bind="addToCart">Add to Cart</button>*@
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--View Cart-->
+<div class="modal fade CartModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Product Details</h4>
+            </div>
+            <div class="modal-body" data-bind="foreach: cart">
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            <img width="190" height="250" data-bind="attr: {src: 'data:image/jpeg;base64,'+ CoverImage }" />
+                            <br />
+                            <br />
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>Product Name</td>
+                        <td>
+                            <input type="text" id="Name" class="form-control" readonly data-bind="value: Name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Product Type</td>
+                        <td>
+                            <textarea rows="1" id="Type" class="form-control" readonly data-bind="value: Type"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Product Description</td>
+                        <td>
+                            <textarea rows="3" cols="255" id="Description" class="form-control" readonly data-bind="value: Description"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Suplier Name</td>
+                        <td>
+                            <textarea rows="1" cols="255" id="Supplier" class="form-control" readonly data-bind="value: Supplier"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Selling Price</td>
+                        <td>
+                            <input type="number" id="SellingPrice" class="form-control" readonly data-bind="value: SellingPrice">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Quantity In Stock</td>
+                        <td>
+                            <input type="number" id="QuantityInStock" class="form-control" readonly data-bind="value: QuantityInStock">
+                        </td>
+                    </tr>
+
+
+
+
+                </table>
+                Total Price: $<span data-bind="text: $root.totalPrice"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                @*<button type="button" data-bind="addToCart">Add to Cart</button>*@
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+@*<div class="modal fade" id="addToCart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-bind="if: details()">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add To Cart</h4>
+            </div>
+            <div class="modal-body" data-bind="foreach:cartItem">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+            </div>
+
+        </div>
+    </div>
+    </div>*@
+
+

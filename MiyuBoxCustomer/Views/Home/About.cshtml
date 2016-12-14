@@ -1,0 +1,46 @@
+﻿@section scripts {
+    @Scripts.Render("~/bundles/Faq")
+}
+@{
+    ViewBag.Title = "About";
+}
+
+<div class="jumbotron">
+    <div class="container text-center">
+        <h1>Miyu Box</h1>
+        <p>
+            At MiyuBox, our mission is to be a company that inspires and fulfils your curiosity.
+
+            Our unlimited passion for proteins, content and services, and relentless pursuit of freshness, drives us to deliver fresh products in ways that only MiyuBox can, creating unique new cultures and experiences.
+
+            Everything we do is to move you emotionally.
+        </p>
+    </div>
+</div>
+<br />
+
+<p>Search for desired FaQ: <input type="text" size="30" data-bind="value: searchString, valueUpdate: 'afterkeydown'" /></p>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Miyu Box FaQ</h2>
+            </div>
+            <div class="panel-body">
+                <table cellpadding="10" data-bind="foreach: searchQuestionAnswers">
+
+
+                    <tr>
+
+                        <td valign="top">
+                            <strong><span data-bind="text: Question"></span></strong>  <br />
+                            <span data-bind="text: Answer"></span><br />
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
